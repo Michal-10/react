@@ -31,31 +31,16 @@ const userReducer = (state: User, action: action): User => {
     switch (action.type) {
         case 'CREATE':
             return {
-                ...state,...action.data
-                // password: action.data.password ?? state.password,
-                // email: action.data.email ?? state.email,
-                // firstName: 'M',
-                // lastName: 'M'
-            }
+                ...state,...action.data }
         case 'UPDATE':
             return {
-                ...state,...action.data
-                // password: action.data.password ?? state.password,
-                // email: action.data.email ?? state.email,
-                // firstName: action.data.firstName ?? state.firstName,
-                // lastName: action.data.lastName ?? state.lastName,
-                // phone: action.data.phone ?? state.phone,
-                // address: action.data.address ?? state.address,
-            };
+                ...state,...action.data };
         // case 'DELETE':
         default: return state;
     }
 }
 
-// type UserContextType = [User, Dispatch<action>]
-// export const userCotext = createContext<UserContextType>([{} as User, () => { }]);
 export const userCotext = createContext<[User, Dispatch<action>]>([{} as User, () => { }]);
-
 
 const HomePage = () => {
     const [isLogin, setIsLogin] = useState(false);
@@ -110,20 +95,6 @@ const HomePage = () => {
             </Box>
         </Modal>
     </>)
-
-    {/* <Modal open={open} onClose={() => setOpen(false)}>
-                <Box sx={style}>
-                    <TextField label='firstName' />
-                    <TextField label='lastName' />
-                    <TextField label='passward' />
-                    <TextField label='email' />
-                    <TextField label='addres' />
-                    <TextField label='phone' />
-                    <Button onClick={() => {
-                        setOpen(false); setIsLogin(true)
-                    }}>Login</Button>
-                </Box>
-            </Modal>  */}
 }
 export default HomePage;
 

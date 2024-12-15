@@ -1,6 +1,7 @@
 import {  Box, Button, Modal,  TextField } from "@mui/material"
 import { FormEvent, useRef, useState, useContext } from "react"
 import { userCotext } from "./HomePage";
+import { setUpdateClose } from "./ShowUserNameAndAvatar";
 
 const style = {
     position: 'absolute',
@@ -16,11 +17,9 @@ const style = {
 
 const UpdateUser = () => {
 
-    // const [open, setOpen] = useState(false);
     const [open, setOpen] = useState(true);
+    const [close,setClose]=useContext(setUpdateClose);
     const [user, userDispatch] = useContext(userCotext);
-
-    // const userRef = useRef<User>(user)
 
     const firstNameRef = useRef<HTMLInputElement>(null);
     const lastNameRef = useRef<HTMLInputElement>(null);
@@ -29,24 +28,12 @@ const UpdateUser = () => {
     const phoneRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const { name, value } = e.target;
-    //     userRef.current[name as keyof User] = value;
-    // }
-
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         userDispatch({
             type: 'UPDATE',
             data: {
-                // userRef.current
-                // firstName: userRef.current?.firstName ,
-                // email: userRef.current?.email ,
-                // lastName: userRef.current?.lastName ,
-                // address: userRef.current?.address ,
-                // phone: userRef.current?.phone ,
-                // password: userRef.current?.password 
                 firstName: firstNameRef.current?.value || user.firstName,
                 email: emailRef.current?.value || user.email,
                 lastName: lastNameRef.current?.value || user.lastName,
@@ -55,21 +42,14 @@ const UpdateUser = () => {
                 password: passwordRef.current?.value || user.password
             }
         })
-        // setOpen(!open);//סגור את המודל לאחר עדכון
-        setOpen(!open);
+        setClose(!close);
+        setOpen(!open);//סגור את המודל לאחר עדכון
     }
 
     return (<>
-        <Modal open={open} onClose={() => setOpen(!open)}>
+        <Modal open={open} >
             <Box sx={style}>
                 <form onSubmit={handleSubmit}>
-                    {/* <TextField label='firstName' onChange={handleChange} />
-                    <TextField label='lastName' onChange={handleChange} />
-                    <TextField label='passward' onChange={handleChange} />
-                    <TextField label='email' onChange={handleChange} />
-                    <TextField label='addres' onChange={handleChange} />
-                    <TextField label='phone' onChange={handleChange} />
-                    <Button type="submit">Save Change</Button> */}
                     <TextField label='firstName' inputRef={firstNameRef} />
                     <TextField label='lastName' inputRef={lastNameRef} />
                     <TextField label='passward' inputRef={passwordRef} />

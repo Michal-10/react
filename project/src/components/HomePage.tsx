@@ -7,7 +7,7 @@ import ShowUserNameAndAvatar from "./ShowUserNameAndAvatar";
 type partUser = Partial<User>;
 
 type action = {
-    type: string,
+    type: 'DELETE'|'CREATE'|'UPDATE',
     data: partUser
 }
 
@@ -31,29 +31,30 @@ const userReducer = (state: User, action: action): User => {
     switch (action.type) {
         case 'CREATE':
             return {
-                ...state,
-                password: action.data.password ?? state.password,
-                email: action.data.email ?? state.email,
-                firstName: 'M',
-                lastName: 'M'
+                ...state,...action.data
+                // password: action.data.password ?? state.password,
+                // email: action.data.email ?? state.email,
+                // firstName: 'M',
+                // lastName: 'M'
             }
         case 'UPDATE':
             return {
-                ...state,
-                password: action.data.password ?? state.password,
-                email: action.data.email ?? state.email,
-                firstName: action.data.firstName ?? state.firstName,
-                lastName: action.data.lastName ?? state.lastName,
-                phone: action.data.phone ?? state.phone,
-                address: action.data.address ?? state.address,
+                ...state,...action.data
+                // password: action.data.password ?? state.password,
+                // email: action.data.email ?? state.email,
+                // firstName: action.data.firstName ?? state.firstName,
+                // lastName: action.data.lastName ?? state.lastName,
+                // phone: action.data.phone ?? state.phone,
+                // address: action.data.address ?? state.address,
             };
         // case 'DELETE':
         default: return state;
     }
 }
 
-type UserContextType = [User, Dispatch<action>]
-export const userCotext = createContext<UserContextType>([{} as User, () => { }]);
+// type UserContextType = [User, Dispatch<action>]
+// export const userCotext = createContext<UserContextType>([{} as User, () => { }]);
+export const userCotext = createContext<[User, Dispatch<action>]>([{} as User, () => { }]);
 
 
 const HomePage = () => {
@@ -62,7 +63,7 @@ const HomePage = () => {
     const [user, userDispatch] = useReducer(userReducer, {} as User);
 
     const PasswordRef = useRef<HTMLInputElement>(null)
-    const emailRef = useRef<HTMLInputElement>(null)
+    const nameRef = useRef<HTMLInputElement>(null)
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -72,11 +73,11 @@ const HomePage = () => {
             type: "CREATE",
             data: {
                 password: PasswordRef.current?.value || "",
-                email: emailRef.current?.value || "",
-                lastName: '',
+                firstName: nameRef.current?.value || "",
+                lastName: ' ',
                 address: '',
                 phone: '',
-                firstName: ''
+                email: ''
             },
         });
         setOpen(false); // סגור את המודאל אחרי התחברות
@@ -101,10 +102,10 @@ const HomePage = () => {
         <Modal open={open} onClose={() => setOpen(false)}>
             <Box sx={style}>
                 <form onSubmit={handleSubmit}>
-                    <TextField label='userEmail' inputRef={emailRef} />
+                    <TextField label='userName' inputRef={nameRef} />
                     <br />
                     <TextField label='userPassword' inputRef={PasswordRef} />
-                    <Button type="submit">Login</Button>
+                    <Button type="submit">התחברות</Button>
                 </form>
             </Box>
         </Modal>

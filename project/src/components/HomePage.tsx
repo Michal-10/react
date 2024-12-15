@@ -7,7 +7,7 @@ import ShowUserNameAndAvatar from "./ShowUserNameAndAvatar";
 type partUser = Partial<User>;
 
 type action = {
-    type: 'DELETE'|'CREATE'|'UPDATE',
+    type: 'DELETE' | 'CREATE' | 'UPDATE',
     data: partUser
 }
 
@@ -27,14 +27,22 @@ const style = {
     pb: 3,
 };
 
+const buttonStyle = {
+    position: "absolute",
+    top: "3%",
+    left: "2%",
+};
+
 const userReducer = (state: User, action: action): User => {
     switch (action.type) {
         case 'CREATE':
             return {
-                ...state,...action.data }
+                ...state, ...action.data
+            }
         case 'UPDATE':
             return {
-                ...state,...action.data };
+                ...state, ...action.data
+            };
         // case 'DELETE':
         default: return state;
     }
@@ -74,12 +82,12 @@ const HomePage = () => {
                 Home
             </Box>
         }
-        
+
         <Grid2 container>
             <userCotext.Provider value={[user, userDispatch]}>
                 {!isLogin ?
-                    <Button color="primary" variant="contained" onClick={() => setOpen(!open)}>Login</Button>
-                    : <ShowUserNameAndAvatar/>
+                    <Button sx={buttonStyle} color="primary" variant="contained" onClick={() => setOpen(!open)}>Login</Button>
+                    : <ShowUserNameAndAvatar />
                 }
             </userCotext.Provider>
         </Grid2>

@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "id": 1736721699631,
+      "email": "s@s.m",
+      "password": "123",
+      "firstName": "",
+      "lastName": "",
+      "address": "",
+      "phone": ""
+    },
+    {
+      "id": 1736721754578,
+      "email": "f@f.f",
+      "password": "123",
+      "firstName": "",
+      "lastName": "",
+      "address": "ץךליחעכג",
+      "phone": ""
+    },
+    {
+      "id": 1736726311724,
+      "email": "s@s.s",
+      "password": "123",
+      "firstName": "מיכל",
+      "lastName": "איזקוב",
+      "address": "",
+      "phone": "0527144087"
+    }
+  ],
+  "recipes": [
+    {
+      "id": 1,
+      "title": "פסטה אלפרדו",
+      "description": "פסטה עם רוטב שמנת עשיר",
+      "authorId": 1
+    },
+    {
+      "id": 2,
+      "title": "סופגניות",
+      "description": "ר",
+      "authorId": 1
+    }
+  ]
+}

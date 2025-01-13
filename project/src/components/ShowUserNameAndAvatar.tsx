@@ -1,8 +1,7 @@
-import { Avatar, Button, Stack } from "@mui/material";
+import { Avatar, Box, Button, Stack } from "@mui/material";
 import { createContext, Dispatch, useContext, useState } from "react";
-import { userCotext } from "./HomePage";
 import UpdateUser from "./UpdateUser";
-
+import { userCotext } from "./MenuPage";
 export const setUpdateClose = createContext<[boolean, Dispatch<boolean>]>([false, () => { }])
 
 const ShowUserNameAndAvatar = () => {
@@ -11,7 +10,6 @@ const ShowUserNameAndAvatar = () => {
     const [user, userDispatch] = useContext(userCotext);
 
     function stringToColor(string: string) {
-        console.log(string);
 
         let hash = 0;
         let i;
@@ -30,32 +28,39 @@ const ShowUserNameAndAvatar = () => {
     }
 
     const stringAvatar = (name: string) => {
+        
+        let x = name === undefined || name == ' ' ? '?' : `${name[0]}${name[name.indexOf(' ') + 1]}`;
+
         return {
             sx: {
                 bgcolor: stringToColor(name),
             },
-            children: `${name[0]}${name[name.indexOf(' ') + 1]}`,
+            // children: child == '' || child == 'undefined' ? '?' : child,
+            children: x
         };
     }
 
     return (
         <>
-            <Stack direction="column" spacing={2}>
-                <Stack direction="row" spacing={4}>
-                    <Avatar {...stringAvatar(user.firstName + ' ' + user.lastName)} />
-                    <h4 >  {user.firstName} {user.lastName}</h4>
+            {/* <Link to="/Home"  style={{border:'2px solid white', color:'white',paddingRight:'10px', left:'3%'}}>logout</Link>  */}
+            <Button sx={{ marginRight: '10px', padding: '3px', color: 'white', borderRadius: '3px', border: '2px solid white' }} variant="outlined" >logout</Button>
+
+            <Box /*sx={{ position: 'absolute', top: '4%', left: '3%' }}*/>
+                <Stack direction="row" spacing={2}>
+                    <Avatar style={{marginLeft:'8px'}} {...stringAvatar(user.firstName + ' ' + user.lastName)} />
+                    <Box sx={{ fontWeight: 'bolder', whiteSpace: 'nowrap', fontSize: '20px', paddingTop: '5px' }}>  {user.firstName} {user.lastName}</Box>
+                    <Button sx={{ marginRight: '10px', padding: '3px', color: 'white', borderRadius: '3px', border: '2px solid white' }} variant="outlined" onClick={() => setUpdate(!update)}>Update
+                    </Button>
                 </Stack>
-                <Button sx={{ height: 30, 
-                              width: 80, 
-                              fontSize: 12}} 
-                              color="primary" variant="outlined" onClick={() => setUpdate(!update)}>Update
-                </Button>
-            </Stack>
+            </Box>
+
             <setUpdateClose.Provider value={[update, setUpdate]}>
                 {update &&
                     <UpdateUser />
                 }
             </setUpdateClose.Provider>
+
+
         </>
     )
 }

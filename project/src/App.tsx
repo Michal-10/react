@@ -1,14 +1,15 @@
 
 import './App.css'
-import HomePage from './components/HomePage'
+import MenuPage from './components/MenuPage'
 
 
 function App() {
-  
+
 
   return (
     <>
-      <HomePage/>
+      <MenuPage />
+      {/* <HomePage /> */}
     </>
   )
 }

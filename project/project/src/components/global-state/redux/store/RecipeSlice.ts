@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RecipeType } from "../../../../types/RecipeType";
 import axios from "axios";
 import { RootState } from "./store";
+import LoginStore from "../../mobX/LoginStore";
 
 export const getRecipes = createAsyncThunk('recipes/get', async (_, thunkApi) => {
     try {
@@ -13,8 +14,11 @@ export const getRecipes = createAsyncThunk('recipes/get', async (_, thunkApi) =>
 })
 
 export const addRecipe = createAsyncThunk('recipes/add', async (recipe: RecipeType, thunkApi) => {
-    try {
-        const res = await axios.post("http://localhost:3000/api/recipes", recipe);
+    try {        
+        const res = await axios.post("http://localhost:3000/api/recipes",
+           recipe,
+           { headers: { 'user-id': LoginStore.UserId + '' } 
+        });
         return res.data as RecipeType[];
     } catch (error) {
         return thunkApi.rejectWithValue(error);

@@ -1,16 +1,18 @@
 
-import { BrowserRouter } from 'react-router'
+import { RouterProvider } from 'react-router'
 import './App.css'
-import MenuPage from './components/MenuPage'
+import store from './components/global-state/redux/store/store'
+import { router } from './routers'
+import { Provider } from 'react-redux'
 
 function App() {
 
   return (
     <>
-        <MenuPage />
-        {/* <HomePage /> */}
-    </>
-  )
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </>)
 }
 
 export default App

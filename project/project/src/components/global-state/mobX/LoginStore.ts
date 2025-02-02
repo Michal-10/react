@@ -1,21 +1,28 @@
 import { makeAutoObservable } from "mobx"
 import { LoginStatus } from "../../../types/LoginStatus";
 
-class LoginStore{
+class LoginStore {
 
-    isLogin :LoginStatus = 'before' ;
-    userId! : number;
-   
+    private isLogin: LoginStatus = 'before';
+    private userId!: number;
+
     constructor() {
         makeAutoObservable(this);
     }
 
-    get getIsLogged(){
+    get IsLogged() {
         return this.isLogin;
     }
+    set IsLogged(status: LoginStatus) {
+        this.isLogin = status;
+    }
 
-    get getUserId(){
+    get UserId() {
         return this.userId;
+    }
+
+    set UserId(userId: number) {
+        this.userId = userId;
     }
 }
 

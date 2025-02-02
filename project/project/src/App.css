@@ -1,3 +1,14 @@
+body{
+  background-color:white;
+  background-image: url("./../img/8377660.jpg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* direction: ltr; */
+  
+  /* background-blend-mode: screen; */
+}
+
 /* #root {
   max-width: 1280px;
   margin: 0 auto;

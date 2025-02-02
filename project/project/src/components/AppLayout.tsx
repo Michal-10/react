@@ -1,14 +1,11 @@
-import React from 'react'
 import NavBar from './NavBar'
 import { Outlet } from 'react-router'
-import { Provider } from 'mobx-react'
-import store from './global-state/redux/store/store'
+import MenuPage from './login/MenuPage'
 
 export default () => {
     return (<>
-        {/* <Provider store={store}> */}
-            <NavBar />
-            <Outlet />
-        {/* </Provider> */}
+        <MenuPage />
+        <NavBar />
+        <Outlet />
     </>)
 }

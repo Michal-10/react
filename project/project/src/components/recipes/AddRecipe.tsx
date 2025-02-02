@@ -1,66 +1,84 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Modal, TextField } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { object, string } from 'yup'
-import { RecipeType } from '../../types/RecipeType';
+import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { array, object, string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../global-state/redux/store/store';
+import { AppDispatch, RootState } from '../global-state/redux/store/store';
 import { addRecipe } from '../global-state/redux/store/RecipeSlice';
-import { useState } from 'react';
-import LoginStore from '../global-state/mobX/LoginStore';
-import IsOpenModal, { setIsOpenAddModal } from '../global-state/redux/store/AddRecipeSlice';
-
+import { setIsOpenAddModal } from '../global-state/redux/store/AddRecipeSlice';
+import { styleModal } from '../login/LoginRegisterWithApi';
+import { useNavigate } from 'react-router';
+import { Delete } from "@mui/icons-material";
 
 const schema = object({
-  title: string().required(),
+  title: string().required("the title is required"),
   description: string(),
-  products: string().required(),
-  ingredients: string(),
+  // ingredients:string(), //array().of(string()),//.required(),
+  ingredients: array().of(string().required("Ingredient cannot be empty")).min(1, "At least one ingredient is required"), 
   instructions: string()
 }).required();
 
 export default () => {
 
-  // const [openModal,setOpenModal]= useState(true);
   const dispatch = useDispatch<AppDispatch>();
-  const isOpenModal = useSelector((state: any) => state.isOpenModal.isOpenAddModal);
+  const isOpenModal = useSelector((state: RootState) => state.isOpenModal.isOpenAddModal);
+  const navigate = useNavigate();
 
   const {
-    formState:{errors},
+    formState: { errors },
+    control,
     register,
     handleSubmit,
     reset,
   } = useForm({ resolver: yupResolver(schema) })
 
-  const onSubmit = (data: RecipeType) => {//----------------any-------
-    const dispatch = useDispatch<AppDispatch>();
-    // setOpenModal(false);
-    dispatch(addRecipe({...data}));
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'ingredients' as never///////////////////
+  });
+
+
+  const onSubmit = (data: any) => {//----------------any-------
+    dispatch(addRecipe(data));
     reset();
-    // LoginStore.isLogin = 'in';
+    dispatch(setIsOpenAddModal(false)); // ודא שהשורה הזו קיימת
+    navigate('/RecipesList');
   }
 
   return (<>
-    <Modal open={isOpenModal} onClose={()=>dispatch(setIsOpenAddModal(false))}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <Modal open={isOpenModal} >
+      <Box sx={styleModal}>
+        <Typography variant="h5" sx={{ color: '#193137', margin: '20px', fontWeight: 'bold', textAlign: 'center' }}>add recipe</Typography>
 
-        <TextField label="title" {...register('title')} />
-        {errors.title?.message && <div>{errors.title?.message} </div>}
-        
-        <TextField label="description" {...register('description')} />
-        {errors.description?.message && <div>{errors.description?.message} </div>}
-        
-        <TextField label="products" {...register('products')} />
-        {errors.products?.message && <div>{errors.products?.message} </div>}
-        
-        <TextField label="ingredients" {...register('ingredients')} />
-        {errors.ingredients?.message && <div>{errors.ingredients?.message} </div>}
+        <form onSubmit={handleSubmit(onSubmit)}>
 
-        <TextField label="instructions" {...register('instructions')} />
-        {errors.instructions?.message && <div>{errors.instructions?.message} </div>}
+          <TextField variant="filled" margin="normal" fullWidth label="title" {...register('title')} />
+          {errors.title?.message && <div>{errors.title?.message} </div>}
 
-        <Button >Save recipe</Button>
-      </form>
+          <TextField variant="filled" margin="normal" fullWidth label="description" {...register('description')} />
+          {errors.description?.message && <div>{errors.description?.message} </div>}
+
+          {fields.map((item, index) => (
+            <div key={item.id}>
+              <TextField {...register(`ingredients.${index}`)} label={`product ${index + 1}`} />
+              <Button style={{color: 'rosybrown', border: '2px solid rosybrown',marginLeft:'5%', marginTop:'2%'}} onClick={() => remove(index)}> <Delete/></Button>
+            </div>
+          ))}
+
+          <Button style={{color: 'rosybrown', border: '2px solid rosybrown'}}  onClick={() => append('')} sx={{ mt: 2 }}>
+            הוסף מוצר 
+          </Button>
+          {errors.ingredients?.message && <div>{errors.ingredients?.message} </div>}
+
+          {/* <TextField placeholder='eg: egg, sugar, milk...' variant="filled" margin="normal" fullWidth label="ingredients" {...register('ingredients')} />
+          {errors.ingredients?.message && <div>{errors.ingredients?.message} </div>} */}
+
+          <TextField variant="filled" margin="normal" fullWidth label="instructions" {...register('instructions')} />
+          {errors.instructions?.message && <div>{errors.instructions?.message} </div>}
+
+          <Button sx={{ backgroundColor:'rosybrown', marginTop: '2px' }}  fullWidth variant="contained" type="submit">Save Recipe</Button>
+        </form>
+      </Box>
     </Modal>
   </>)
-}
+};

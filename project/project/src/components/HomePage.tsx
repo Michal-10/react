@@ -1,11 +1,11 @@
 import { Box } from "@mui/material"
 
 export const styleBox = {
-    fontSize: '40px',
+    fontSize: '70px',
     fontWeight: 'bold',
     p: 5,
     position: 'absolute',
-    top: '50%',
+    top: '40%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
 }

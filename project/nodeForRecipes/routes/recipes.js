@@ -20,7 +20,7 @@ router.post('/', authMiddleware, (req, res) => {
     const {
         title,
         description,
-        products,
+        // products,
         ingredients,
         instructions
     } = req.body;
@@ -29,7 +29,7 @@ router.post('/', authMiddleware, (req, res) => {
     const newRecipe = {
         id: Date.now(),
         title,
-        products,
+        // products,
         description,
         authorId: req.header('user-id'),
         ingredients,

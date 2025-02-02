@@ -1,8 +1,8 @@
 import { Avatar, Box, Button, Stack } from "@mui/material";
 import { useContext, useState } from "react";
-import { userContext } from "../MenuPage";
+import { userContext } from "./MenuPage";
 import UpdateUser from "./UpdateUser";
-import { Link } from "react-router";
+import LoginStore from "../global-state/mobX/LoginStore";
 
 const ShowUserNameAndAvatar = () => {
 
@@ -10,13 +10,8 @@ const ShowUserNameAndAvatar = () => {
     const [user, userDispatch] = useContext(userContext);
 
     function stringToColor(string: string) {
-        console.log("dfg-bnhm");
-        
-        console.log(user);
-        
         let hash = 0;
         let i;
-
         for (i = 0; i < string.length; i += 1) {
             hash = string.charCodeAt(i) + ((hash << 5) - hash);
         }
@@ -31,15 +26,7 @@ const ShowUserNameAndAvatar = () => {
 
     const stringAvatar = (name: string) => {
         
-        if (name == "" || name== undefined) {
-            return {
-                sx: {
-                    bgcolor: 'black',
-                },
-                children: `?`
-            };
-        }
-        else {
+        if (name != "" && name != undefined) {
             return {
                 sx: {
                     bgcolor: stringToColor(name),
@@ -51,17 +38,14 @@ const ShowUserNameAndAvatar = () => {
 
     return (
         <>
-        <Link to="/Home" style={{ marginRight: '10px', padding: '3px', color: 'white', borderRadius: '3px', border: '2px solid white' }} >LogOut</Link>
-
-            <Box >
+            <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: "6vh" }}>
                 <Stack direction="row" spacing={2}>
-                {/* <Avatar style={{ marginLeft: '8px' }} {...stringAvatar(user.firstName)} > */}
-                            {/* {(user.firstName ? user.firstName[0] : '')} */}
-                        {/* </Avatar> */}
-                    <Avatar style={{ marginLeft: '8px' }} {...stringAvatar(user.firstName)} />
-                    <Box sx={{ fontWeight: 'bolder', whiteSpace: 'nowrap', fontSize: '20px', paddingTop: '5px' }}>  {user.firstName} {user.lastName}</Box>
-                    <Button sx={{ marginRight: '10px', padding: '3px', color: 'white', borderRadius: '3px', border: '2px solid white' }} variant="outlined" onClick={() => setUpdate(!update)}>Update
-                    </Button>
+                    <Avatar {...stringAvatar(user.firstName)} >
+                        {(user.firstName ? user.firstName[0] : '')}
+                    </Avatar>
+                    <Box sx={{ fontWeight: 'bolder', whiteSpace: 'nowrap', fontSize: '20px' }}>  {user.firstName} {user.lastName}</Box>
+                    <Button style={{ color: 'rosybrown' }} sx={{ marginRight: '10px', padding: '10px', borderRadius: '3px', border: '2px solid rosybrown' }} variant="outlined" onClick={() => setUpdate(!update)}>Update</Button>
+                    <Button style={{ color: 'rosybrown' }} sx={{ marginRight: '10px', padding: '10px', borderRadius: '3px', border: '2px solid rosybrown' }} variant="outlined" onClick={() => LoginStore.IsLogged = 'before'}>logout</Button>
                 </Stack>
             </Box>
 

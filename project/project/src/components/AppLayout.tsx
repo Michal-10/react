@@ -1,6 +1,6 @@
 import NavBar from './NavBar'
 import { Outlet } from 'react-router'
-import MenuPage from './login/MenuPage'
+import MenuPage from './MenuPage'
 
 export default () => {
     return (<>

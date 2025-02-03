@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Stack } from "@mui/material";
 import { useContext, useState } from "react";
-import { userContext } from "./MenuPage";
+import { userContext } from "../MenuPage";
 import UpdateUser from "./UpdateUser";
 import LoginStore from "../global-state/mobX/LoginStore";
 

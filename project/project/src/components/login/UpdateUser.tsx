@@ -1,7 +1,7 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { FormEvent, useRef, useContext, useState, Dispatch } from "react"
 import axios from "axios";
-import { userContext } from "./MenuPage";
+import { userContext } from "../MenuPage";
 import { styleModal } from "./LoginRegisterWithApi";
 import LoginStore from "../global-state/mobX/LoginStore";
 

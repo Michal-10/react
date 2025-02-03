@@ -18,13 +18,13 @@ export const styleModal = {
     pt: 2,
     px: 4,
     pb: 3,
-    color:'rosybrown'
+    color: 'rosybrown'
 };
 
 export default observer(({ status }: { status: string }) => {
 
     const [openModal, setOpenModal] = useState(true);
-    const [user, userDispatch] = useContext(userContext);
+    const [, userDispatch] = useContext(userContext);
 
     const passwordRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -56,17 +56,17 @@ export default observer(({ status }: { status: string }) => {
                 },
             });
 
-            setOpenModal(!openModal); 
-            LoginStore.IsLogged='after';
+            setOpenModal(!openModal);
+            LoginStore.IsLogged = 'after';
 
         } catch (e: any) {
 
-            if (e.status === 400||e.status === 422 && status == 'register') {
+            if (e.status === 400 || e.status === 422 && status == 'register') {
                 alert('user already sign up 🥲');
             }
             else if (e.status == 401 && status == 'login')
                 alert('user is not register 🥲');
-            LoginStore.IsLogged='before';
+            LoginStore.IsLogged = 'before';
         }
     };
     return (<>
@@ -77,7 +77,7 @@ export default observer(({ status }: { status: string }) => {
                     <Typography variant="h5" sx={{ color: 'rosybrown', margin: '20px', fontWeight: 'bold', textAlign: 'center' }}>{status === 'login' ? "sign in" : "sign up"}</Typography>
                     <TextField label='userEmail' variant="filled" margin="normal" type="email" fullWidth inputRef={emailRef} required />
                     <TextField label='userPassword' variant="filled" margin="normal" type="password" fullWidth inputRef={passwordRef} required />
-                    <Button sx={{ marginTop: '2px', backgroundColor:'rosybrown' }}  fullWidth variant="contained" type="submit">התחברות</Button>
+                    <Button sx={{ marginTop: '2px', backgroundColor: 'rosybrown' }} fullWidth variant="contained" type="submit">התחברות</Button>
                 </form>
             </Box>
         </Modal>

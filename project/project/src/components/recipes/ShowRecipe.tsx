@@ -34,7 +34,7 @@ export const ShowRecipe = () => {
 
                         {loading ? (
                             <Box sx={{ textAlign: "center", padding: 4 }}>
-                                <CircularProgress size={50} /> 
+                                <CircularProgress size={50} />
                                 <Typography sx={{ marginTop: 2 }}>Loading recipe...</Typography>
                             </Box>
                         ) : (

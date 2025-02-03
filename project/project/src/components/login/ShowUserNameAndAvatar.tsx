@@ -7,7 +7,7 @@ import LoginStore from "../global-state/mobX/LoginStore";
 const ShowUserNameAndAvatar = () => {
 
     const [update, setUpdate] = useState(false);
-    const [user, userDispatch] = useContext(userContext);
+    const [user,] = useContext(userContext);
 
     function stringToColor(string: string) {
         let hash = 0;
@@ -25,7 +25,7 @@ const ShowUserNameAndAvatar = () => {
     }
 
     const stringAvatar = (name: string) => {
-        
+
         if (name != "" && name != undefined) {
             return {
                 sx: {

@@ -5,7 +5,7 @@ import { userContext } from "./MenuPage";
 import { styleModal } from "./LoginRegisterWithApi";
 import LoginStore from "../global-state/mobX/LoginStore";
 
-const UpdateUser = ({close,setClose}:{close:boolean;setClose:Dispatch<boolean>}) => {
+const UpdateUser = ({ close, setClose }: { close: boolean; setClose: Dispatch<boolean> }) => {
 
     const [user, userDispatch] = useContext(userContext);
     const [errors, setErrors] = useState<{ email: null | string, phone: null | string }>({ email: null, phone: null });
@@ -15,12 +15,11 @@ const UpdateUser = ({close,setClose}:{close:boolean;setClose:Dispatch<boolean>})
     const emailRef = useRef<HTMLInputElement>(null);
     const addressRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
-    
+
     const checkEmail = (): boolean => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (emailRef.current?.value) {
             if (!emailRegex.test(emailRef.current.value)) {
-                console.log("email " + emailRef.current?.value);
                 setErrors(prevErrors => ({ ...prevErrors, email: "Invalid email address." }));
                 return false;
             } else {
@@ -59,28 +58,28 @@ const UpdateUser = ({close,setClose}:{close:boolean;setClose:Dispatch<boolean>})
         }
 
         try {
-            
+
             await axios.put('http://localhost:3000/api/user', {
-                firstName: firstNameRef.current?.value||user.firstName,
-                lastName: lastNameRef.current?.value||user.lastName,
-                email: emailRef.current?.value||user.email,
-                address: addressRef.current?.value||user.address,
-                phone: phoneRef.current?.value||user.phone
+                firstName: firstNameRef.current?.value || user.firstName,
+                lastName: lastNameRef.current?.value || user.lastName,
+                email: emailRef.current?.value || user.email,
+                address: addressRef.current?.value || user.address,
+                phone: phoneRef.current?.value || user.phone
             },
-            { headers: { 'user-id': LoginStore.UserId + '' } }
+                { headers: { 'user-id': LoginStore.UserId + '' } }
             );
 
             userDispatch({
                 type: 'UPDATE',
                 data: {
-                    firstName: firstNameRef.current?.value||user.firstName,
-                    lastName: lastNameRef.current?.value||user.lastName,
-                    email: emailRef.current?.value||user.email,
-                    address: addressRef.current?.value||user.address,
-                    phone: phoneRef.current?.value||user.phone
+                    firstName: firstNameRef.current?.value || user.firstName,
+                    lastName: lastNameRef.current?.value || user.lastName,
+                    email: emailRef.current?.value || user.email,
+                    address: addressRef.current?.value || user.address,
+                    phone: phoneRef.current?.value || user.phone
                 }
             })
-            setClose(!close); 
+            setClose(!close);
         } catch (e: any) {
 
             if (e.status == 404)
@@ -89,20 +88,20 @@ const UpdateUser = ({close,setClose}:{close:boolean;setClose:Dispatch<boolean>})
     }
 
     return (<>
-    
+
         <Modal open={true} >
             <Box sx={styleModal}>
                 <form onSubmit={handleSubmit}>
                     <Typography variant="h5" sx={{ color: 'rosybrown', margin: '10px', fontWeight: 'bold', textAlign: 'center' }}>Update</Typography>
                     <TextField label='firstName' variant="filled" margin="normal" fullWidth inputRef={firstNameRef} />
                     <TextField label='lastName' variant="filled" margin="normal" fullWidth inputRef={lastNameRef} />
-                    <TextField label='email' defaultValue={user.email}  variant="filled" margin="normal" fullWidth type="email" /*onChange={HandleChange}*/ inputRef={emailRef} />
+                    <TextField label='email' defaultValue={user.email} variant="filled" margin="normal" fullWidth type="email" /*onChange={HandleChange}*/ inputRef={emailRef} />
                     {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
                     <TextField label='address' variant="filled" margin="normal" fullWidth inputRef={addressRef} />
                     <TextField label='phone' variant="filled" margin="normal" fullWidth inputRef={phoneRef} />
                     {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>}
 
-                    <Button sx={{ backgroundColor:'rosybrown'}} variant="contained" fullWidth type="submit">Save Change</Button>
+                    <Button sx={{ backgroundColor: 'rosybrown' }} variant="contained" fullWidth type="submit">Save Change</Button>
                 </form>
             </Box>
         </Modal>

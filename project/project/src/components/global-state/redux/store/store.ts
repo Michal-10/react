@@ -3,7 +3,7 @@ import { recipesSlice } from "./RecipeSlice";
 import IsOpenModal from "./AddRecipeSlice";
 
 export const store = configureStore({
-    reducer: combineSlices(recipesSlice,IsOpenModal)
+    reducer: combineSlices(recipesSlice, IsOpenModal)
 });
 
 export type RootState = ReturnType<typeof store.getState>

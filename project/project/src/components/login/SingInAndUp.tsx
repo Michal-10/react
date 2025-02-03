@@ -27,9 +27,9 @@ export default observer(() => {
             <Grid2 container>
                 {IsLoggedStore.IsLogged === 'before' ?
                     <>
-                        <Box sx={{ display: 'flex',marginTop: '6vh'}}> 
-                            <Button style={{color: 'rosybrown', border: '2px solid rosybrown' }} sx={{  marginLeft: '50px' }} variant="outlined" onClick={() => HandleClick('login')}>sign in</Button>
-                            <Button style={{ color: 'rosybrown', border: '2px solid rosybrown' }} sx={{marginLeft:'50px'}}  variant="outlined" onClick={() => HandleClick('register')}>sign up</Button>
+                        <Box sx={{ display: 'flex', marginTop: '6vh' }}>
+                            <Button style={{ color: 'rosybrown', border: '2px solid rosybrown' }} sx={{ marginLeft: '50px' }} variant="outlined" onClick={() => HandleClick('login')}>sign in</Button>
+                            <Button style={{ color: 'rosybrown', border: '2px solid rosybrown' }} sx={{ marginLeft: '50px' }} variant="outlined" onClick={() => HandleClick('register')}>sign up</Button>
                         </Box>
                     </>
                     :

@@ -5,7 +5,7 @@ import { userContext } from "../MenuPage";
 import { styleModal } from "./LoginRegisterWithApi";
 import LoginStore from "../global-state/mobX/LoginStore";
 
-const UpdateUser = ({ close, setClose }: { close: boolean; setClose: Dispatch<boolean> }) => {
+const UpdateUser = ({ setClose }: { setClose: Dispatch<boolean> }) => {
 
     const [user, userDispatch] = useContext(userContext);
     const [errors, setErrors] = useState<{ email: null | string, phone: null | string }>({ email: null, phone: null });

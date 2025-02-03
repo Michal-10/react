@@ -1,7 +1,7 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { FormEvent, useContext, useRef, useState } from "react";
 import axios from "axios";
-import ShowUserNameAndAvatar from "./ShowUserNameAndAvatar";
+import ShowUserNameAndAvatar from "./UserDetails";
 import { userContext } from "../MenuPage";
 import { observer } from "mobx-react";
 import LoginStore from "../global-state/mobX/LoginStore";

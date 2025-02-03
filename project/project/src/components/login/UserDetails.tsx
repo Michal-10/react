@@ -49,7 +49,7 @@ const ShowUserNameAndAvatar = () => {
                 </Stack>
             </Box>
 
-            {update && <UpdateUser close={update} setClose={setUpdate} />}
+            {update && <UpdateUser setClose={setUpdate} />}
         </>
     )
 }

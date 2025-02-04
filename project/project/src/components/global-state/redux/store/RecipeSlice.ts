@@ -25,6 +25,7 @@ export const addRecipe = createAsyncThunk('recipes/add', async (recipe: RecipeTy
         return thunkApi.rejectWithValue(error);
     }
 });
+
 export const deleteRecipe = createAsyncThunk(
     'recipes/delete',
     async ({ recipeId, userId }: { recipeId: number; userId: number }, thunkApi) => {
@@ -76,7 +77,7 @@ export const recipesSlice = createSlice({
             })
             .addCase(addRecipe.rejected, (state) => {
                 state.loading = false,
-                    state.error = "Failed to add recipes"
+                state.error = "Failed to add recipes"
             })
     }
 });

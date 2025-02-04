@@ -1,13 +1,13 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { FormEvent, useRef, useContext, useState, Dispatch } from "react"
 import axios from "axios";
-import { userContext } from "../MenuPage";
 import { styleModal } from "./LoginRegisterWithApi";
 import LoginStore from "../global-state/mobX/LoginStore";
+import { UserContext } from "../UserContextReducer";
 
 const UpdateUser = ({ setClose }: { setClose: Dispatch<boolean> }) => {
 
-    const [user, userDispatch] = useContext(userContext);
+    const [user, userDispatch] = useContext(UserContext);
     const [errors, setErrors] = useState<{ email: null | string, phone: null | string }>({ email: null, phone: null });
 
     const firstNameRef = useRef<HTMLInputElement>(null);
@@ -44,7 +44,6 @@ const UpdateUser = ({ setClose }: { setClose: Dispatch<boolean> }) => {
         }
         return true;
     }
-
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 

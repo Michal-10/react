@@ -1,13 +1,13 @@
 import { Avatar, Box, Button, Stack } from "@mui/material";
 import { useContext, useState } from "react";
-import { userContext } from "../MenuPage";
 import UpdateUser from "./UpdateUser";
 import LoginStore from "../global-state/mobX/LoginStore";
+import { UserContext } from "../UserContextReducer";
 
 const ShowUserNameAndAvatar = () => {
 
     const [update, setUpdate] = useState(false);
-    const [user,] = useContext(userContext);
+    const [user,] = useContext(UserContext);
 
     function stringToColor(string: string) {
         let hash = 0;

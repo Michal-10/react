@@ -2,9 +2,9 @@ import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { FormEvent, useContext, useRef, useState } from "react";
 import axios from "axios";
 import ShowUserNameAndAvatar from "./UserDetails";
-import { userContext } from "../MenuPage";
 import { observer } from "mobx-react";
 import LoginStore from "../global-state/mobX/LoginStore";
+import { UserContext } from "../UserContextReducer";
 
 export const styleModal = {
     position: 'absolute',
@@ -24,7 +24,7 @@ export const styleModal = {
 export default observer(({ status }: { status: string }) => {
 
     const [openModal, setOpenModal] = useState(true);
-    const [, userDispatch] = useContext(userContext);
+    const [, userDispatch] = useContext(UserContext);
 
     const passwordRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -69,6 +69,7 @@ export default observer(({ status }: { status: string }) => {
             LoginStore.IsLogged = 'before';
         }
     };
+
     return (<>
 
         <Modal open={openModal} >

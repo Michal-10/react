@@ -19,7 +19,6 @@ export const ShowRecipe = () => {
 
     return (
         <>
-
             <Grid container spacing={2}>
                 <Grid item xs={10}>
                     <Box
@@ -67,5 +66,6 @@ export const ShowRecipe = () => {
                     </Box>
                 </Grid>
             </Grid>
-        </>)
+        </>
+    )
 }

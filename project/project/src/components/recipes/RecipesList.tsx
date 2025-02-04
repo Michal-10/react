@@ -4,22 +4,28 @@ import { Button, Grid, List, ListItemButton, ListItemIcon, Typography } from '@m
 import { useEffect } from 'react';
 import { deleteRecipe, getRecipes } from '../global-state/redux/store/RecipeSlice';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
-import { Link, Outlet } from 'react-router';
+import { Link, Outlet, useNavigate } from 'react-router';
 import { Delete } from '@mui/icons-material';
 import { RecipeType } from '../../types/RecipeType';
+import LoginStore from '../global-state/mobX/LoginStore';
+import { observer } from 'mobx-react';
 
-export const RecipesList = () => {
+export const RecipesList = observer(() => {
 
     const dispatch = useDispatch<AppDispatch>();
     const listRecipes = useSelector((state: RootState) => state.recipes.list);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getRecipes());
     }, []);
 
     const handleDelete = async (item: RecipeType) => {
+        if (item.authorId != LoginStore.UserId)
+            return;
         await dispatch(deleteRecipe({ recipeId: item.id, userId: item.authorId }));
         await dispatch(getRecipes());
+        navigate('/RecipesList');
     }
 
     return (<>
@@ -30,9 +36,9 @@ export const RecipesList = () => {
                     <List sx={{ color: "black" }}>
                         {Array.isArray(listRecipes) ? listRecipes.map((item, index) => (
                             <ListItemButton key={index}>
-                                <Button sx={{ color: '#5E4238' }} onClick={() => handleDelete(item)}>
+                                { LoginStore.IsLogged === 'after' && <Button sx={{ color: '#5E4238' }} onClick={() => handleDelete(item)}>
                                     <Delete />
-                                </Button>
+                                </Button>}
                                 <ListItemIcon sx={{ paddingLeft: '1vw' }}>
                                     <RestaurantIcon sx={{ color: "rosybrown" }} />
                                 </ListItemIcon>
@@ -50,5 +56,5 @@ export const RecipesList = () => {
             </Grid>
         </div>
     </>)
-};
+});
 
